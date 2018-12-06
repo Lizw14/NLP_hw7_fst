@@ -1,0 +1,5 @@
+Zero = "0";
+One = "1";
+Bit = Zero | One;
+First = Optimize[Zero Zero* Bit* One One One One?];
+
