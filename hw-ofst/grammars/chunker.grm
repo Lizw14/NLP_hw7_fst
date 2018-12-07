@@ -12,6 +12,10 @@ export BracketNP = ("" : "<") NP ("" : ">");
 export Brackets1 = Optimize[SigmaStar (BracketNP SigmaStar)*];
 export Brackets2 = CDRewrite[BracketNP, "", "", SigmaStar,'sim','obl'];
 export BracketTransform = Brackets2@MakeNmod;
-export construct = ("" : "Quant") ("" : "Noun")+ ("" : "Verb");
-export BracketResult = Optimize[construct @ BracketTransform];
+
+###
+#export BracketResults = Project[BracketTransform,"output"];
+
+###
+#export TransfromNP2 =  
 
