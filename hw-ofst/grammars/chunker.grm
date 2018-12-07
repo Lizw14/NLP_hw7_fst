@@ -10,6 +10,12 @@ export MakeNmod = CDRewrite["Noun" : "Nmod","","Noun",SigmaStar];
 export TransformNP = Optimize[NP @ MakeNmod];
 export BracketNP = ("" : "<") NP ("" : ">");
 export Brackets1 = Optimize[SigmaStar (BracketNP SigmaStar)*];
-export Brackets2 = CDRewrite[BracketNP, "", "", SigmaStar,'sim','obl'];
+export Brackets2 = CDRewrite[BracketNP, "", "", SigmaStar,'sim','opt'];
 export BracketTransform = Brackets2@MakeNmod; 
+
+###
+#export BracketResults = Project[BracketTransform,"output"];
+
+###
+#export TransfromNP2 =  
 
