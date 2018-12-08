@@ -10,9 +10,10 @@ Sigma_arpa = arpabet.Phoneme;
 Pronounce = StringFile['../data/cmumini.txt', byte, arpa];
 
 #StressPattern = CDRewrite[(Sigma - bytelib.kDigit) : "", "", "", Sigma*, 'sim', 'obl'];
-StressPattern = CDRewrite[((arpabet.Consonant:"") | (arpabet.Stressed:"1") | (arpabet.Unstressed:"0"))*, "".arpa, "".arpa, Sigma_arpa*, 'sim', 'obl'];
+export StressPattern = CDRewrite[((arpabet.Consonant:"".arpa) | (arpabet.Stressed:"AH0".arpa) | (arpabet.Unstressed:"T".arpa))*, "".arpa, "".arpa, Sigma_arpa*, 'sim', 'obl'];
 
-Dacytl = ("1" | "2") "0" "0";  
+#Dacytl = ("1" | "2") "0" "0";  
+Dacytl = "AH0".arpa "T".arpa "T".arpa;  
 
-export Results = Optimize[Project[Pronounce @ StressPattern @ (Dacytl*), 'input']];
+export Results = Optimize[Project[Pronounce @StressPattern @ (Dacytl*), 'input']];
 export ListResults = "" : Results;
