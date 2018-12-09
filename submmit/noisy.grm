@@ -1,0 +1,34 @@
+import 'byte.grm' as bytelib;        # load a simple grammar (.grm)
+ByteSigma = (bytelib.kSpace | bytelib.kGraph);  # printable characters
+ByteSigmaStar = Optimize[ByteSigma*];
+
+export LM = LoadFst['entrain.fst'];  # load trigram language model (.fst)
+vocab = SymbolTable['entrain.sym'];  # load model's symbol table (.sym)
+
+export RandomChar = bytelib.kGraph <4.54>;
+export RandomWord = Optimize[(RandomChar (RandomChar <0.1>)* ) <2.3>];
+export SpellOOV = "<unk>".vocab : RandomWord;
+OrigSpell = StringFile['entrain.alpha', vocab, byte];
+Spell = Optimize[OrigSpell | SpellOOV];
+
+# YOU WILL FILL IN THE REST
+export DelSpaces = CDRewrite[" ":"", "", "", ByteSigmaStar, 'sim', 'obl'];
+export DelSomeSpaces = CDRewrite[((" ":"" <0.3>) | (" ":" ")), "", "", ByteSigmaStar, 'sim', 'obl'];
+
+# 11d
+#export SpellText = (OrigSpell ("".vocab : " ".byte))*;
+#export PrintText = SpellText;
+
+# 11e
+export SpellText = (Spell ("".vocab : " ".byte))*;
+export PrintText = (OrigSpell ("".vocab : "ha".byte) | ("<unk>".vocab:"<unk>"))*;
+
+#export Generate = Optimize[LM @ SpellText @ DelSpaces];
+#export Decode = Invert[Generate];
+
+export InvLM = Invert[LM]; 
+export InvSpellText = Optimize[Invert[SpellText]];
+export InvDelSpaces = Optimize[Invert[DelSpaces]];
+export InvDelSomeSpaces = Optimize[Invert[DelSomeSpaces]];
+
+
