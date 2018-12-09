@@ -13,10 +13,15 @@ Spell = Optimize[OrigSpell | SpellOOV];
 
 # YOU WILL FILL IN THE REST
 export DelSpaces = CDRewrite[" ":"", "", "", ByteSigmaStar, 'sim', 'obl'];
+export DelSomeSpaces = CDRewrite[((" ":"" <0.3>) | (" ":" ")), "", "", ByteSigmaStar, 'sim', 'obl'];
 
+# 11d
+#export SpellText = (OrigSpell ("".vocab : " ".byte))*;
+#export PrintText = SpellText;
+
+# 11e
 export SpellText = (Spell ("".vocab : " ".byte))*;
-#export SpellText = (OrigSpell)*;
-export PrintText = (OrigSpell ("".vocab : " ".byte) | ("<unk>".vocab:"<unk>"))*;
+export PrintText = (OrigSpell ("".vocab : "ha".byte) | ("<unk>".vocab:"<unk>"))*;
 
 #export Generate = Optimize[LM @ SpellText @ DelSpaces];
 #export Decode = Invert[Generate];
@@ -24,6 +29,6 @@ export PrintText = (OrigSpell ("".vocab : " ".byte) | ("<unk>".vocab:"<unk>"))*;
 export InvLM = Invert[LM]; 
 export InvSpellText = Optimize[Invert[SpellText]];
 export InvDelSpaces = Optimize[Invert[DelSpaces]];
-
+export InvDelSomeSpaces = Optimize[Invert[DelSomeSpaces]];
 
 
